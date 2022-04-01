@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Microsoft.Data.Sqlite;
 
 namespace HabitTracker
 {
@@ -14,7 +14,7 @@ namespace HabitTracker
                 connection.Open();
                 var tableCmd = connection.CreateCommand();
                 tableCmd.CommandText = "";
-                tableCmd.ExecuteNonQuey();
+                tableCmd.ExecuteNonQuery();
                 connection.Close();
                 
             }
