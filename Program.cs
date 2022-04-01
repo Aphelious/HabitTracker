@@ -1,12 +1,23 @@
 ﻿using System;
 
+
 namespace HabitTracker
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Awesome");
+            string connectionString = @"Data Source=HabitTracker.db";
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+                tableCmd.CommandText = "";
+                tableCmd.ExecuteNonQuey();
+                connection.Close();
+                
+            }
         }
     }
 }
