@@ -1,0 +1,14 @@
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/bin/Debug/net6.0/HabitTracker.deps.json
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/bin/Debug/net6.0/HabitTracker.runtimeconfig.json
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/bin/Debug/net6.0/HabitTracker.dll
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/bin/Debug/net6.0/HabitTracker.pdb
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/obj/Debug/net6.0/HabitTracker.csproj.AssemblyReference.cache
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/obj/Debug/net6.0/HabitTracker.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/obj/Debug/net6.0/HabitTracker.AssemblyInfoInputs.cache
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/obj/Debug/net6.0/HabitTracker.AssemblyInfo.cs
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/obj/Debug/net6.0/HabitTracker.csproj.CoreCompileInputs.cache
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/obj/Debug/net6.0/HabitTracker.dll
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/obj/Debug/net6.0/refint/HabitTracker.dll
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/obj/Debug/net6.0/HabitTracker.pdb
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/obj/Debug/net6.0/HabitTracker.genruntimeconfig.cache
+/Users/mike/Desktop/Main/Programming/C#/HabitTracker/obj/Debug/net6.0/ref/HabitTracker.dll
