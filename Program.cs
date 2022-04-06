@@ -109,5 +109,15 @@ namespace HabitTracker
             
             return finalInput;
         }
+        private static void GetAllRecords()
+        {
+            Console.Clear()
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open()
+                var tableCmd = CommandText = 
+                $"SELECT * FROM drinking_water"; 
+            }
+        }
     }
 }
