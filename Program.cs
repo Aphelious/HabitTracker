@@ -23,7 +23,8 @@ namespace HabitTracker
                 connection.Close();
                 
             }
-            GetUserInput();
+            Console.ReadLine();
+            //GetUserInput();
         }
         static void GetUserInput()
         {
@@ -120,6 +121,35 @@ namespace HabitTracker
                 $"SELECT * FROM drinking_water"; 
 
                 List<DrinkingWater> tableData = new();
+
+                SqliteDataReader reader = tableCmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        tableData.Add(
+                            new DrinkingWater
+                            {
+                                Id = reader.GetInt32(0),
+                                Date = DateTime.ParseExact(reader.GetString(1), "dd-MM-yy", new System.Globalization.CultureInfo("en-US")),
+                                Quantity = reader.GetInt32(2)
+                            });
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No rows found");
+                }
+
+                connection.Close();
+
+                Console.WriteLine("--------------------------------------------\n");
+                foreach (var dw in tableData)
+                {
+                    Console.WriteLine($"{dw.Id} - {dw.Date.ToString("dd-MM-yy")} - Quantity: {dw.Quantity}");
+                }
+                Console.WriteLine("--------------------------------------------\n");
             }
         }
     }
