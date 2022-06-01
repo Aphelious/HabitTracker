@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Data.Sqlite;
+using System.Threading.Tasks;
 
 namespace HabitTracker
 {
@@ -23,8 +24,7 @@ namespace HabitTracker
                 connection.Close();
                 
             }
-            Console.ReadLine();
-            //GetUserInput();
+            GetUserInput();
         }
         static void GetUserInput()
         {
@@ -47,6 +47,7 @@ namespace HabitTracker
                 {
                     case "0":
                         Console.WriteLine("\nGoodBye!\n");
+                        Task.Delay(2000).Wait();
                         closeApp = true;
                         break;
                     case "1":
@@ -110,6 +111,8 @@ namespace HabitTracker
             
             return finalInput;
         }
+
+
         private static void GetAllRecords()
         {
             Console.Clear();
