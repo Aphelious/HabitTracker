@@ -48,9 +48,9 @@ namespace HabitTracker
                         Console.WriteLine("\nGoodBye!\n");
                         closeApp = true;
                         break;
-                    // case "1":
-                    //     GetAllRecords();
-                    //     break;
+                    case "1":
+                        GetAllRecords();
+                        break;
                     case "2":
                         Insert();
                         break;
@@ -70,7 +70,7 @@ namespace HabitTracker
         {
             string date = GetDateInput();
 
-            int quantity = GetNumberInput("\n\nPlease isert number of glasses or other measure of your choice (no decimals allowed).\n\n");
+            int quantity = GetNumberInput("\n\nPlease insert number of glasses or other measure of your choice (no decimals allowed).\n\n");
 
             using (var connection = new SqliteConnection(connectionString))
             {
@@ -111,13 +111,25 @@ namespace HabitTracker
         }
         private static void GetAllRecords()
         {
-            Console.Clear()
+            Console.Clear();
             using (var connection = new SqliteConnection(connectionString))
             {
-                connection.Open()
-                var tableCmd = CommandText = 
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+                tableCmd.CommandText = 
                 $"SELECT * FROM drinking_water"; 
+
+                List<DrinkingWater> tableData = new();
             }
         }
+    }
+
+    public class DrinkingWater
+    {
+        public int Id { get; set;}
+
+        public DateTime Date {get; set;}
+        
+        public int Quantity { get; set;}
     }
 }
