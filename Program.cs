@@ -56,10 +56,10 @@ namespace HabitTracker
                     case "2":
                         Insert();
                         break;
-                    // case 3:
-                    //     Delete();
-                    //     break;
-                    // case 4:
+                    case "3":
+                        Delete();
+                        break;
+                    // case "4":
                     //     Update();
                     //     break;
                     // default:
@@ -86,7 +86,6 @@ namespace HabitTracker
                 connection.Close();
                 
             }
-
         }
         internal static string GetDateInput()
         {
@@ -110,9 +109,34 @@ namespace HabitTracker
             int finalInput = Convert.ToInt32(numberInput);
             
             return finalInput;
+
         }
+        private static void Delete()
+        {
+            Console.Clear();
+            GetAllRecords();
 
+            var recordId = GetNumberInput("\n\nPlease provide the record ID of the record you want to delete");
 
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd =  connection.CreateCommand();
+                tableCmd.CommandText = $"DELETE FROM drinking_water WHERE Id = '{recordId}'";
+
+                int rowCount = tableCmd.ExecuteNonQuery(); 
+                GetAllRecords();
+
+                if (rowCount == 0)
+                {
+                    Console.WriteLine($"\n\nRecord with Id# {recordId} doesn't exist. \n\n");
+                    Delete();
+                }
+            }
+
+            Console.WriteLine($"\n\nRecord with Id# {recordId} has been deleted. \n\n");
+            GetUserInput();
+        }
         private static void GetAllRecords()
         {
             Console.Clear();
