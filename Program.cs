@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Data.Sqlite;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace HabitTracker
 {
@@ -49,6 +50,7 @@ namespace HabitTracker
                         Console.WriteLine("\nGoodBye!\n");
                         Task.Delay(2000).Wait();
                         closeApp = true;
+                        Environment.Exit(0);
                         break;
                     case "1":
                         GetAllRecords();
@@ -93,7 +95,16 @@ namespace HabitTracker
 
             string dateInput = Console.ReadLine();
 
-            if (dateInput == "0") GetUserInput();
+            if (dateInput == "0") 
+            {
+                GetUserInput();
+            }
+
+            while(!DateTime.TryParseExact(dateInput, "dd-MM-yy", new CultureInfo("en-US"), DateTimeStyles.None, out _))
+            {
+                Console.WriteLine("\n\nInvalid date (Format: dd-MM-yy). Please try again or type 0 to return to the main menu.\n\n");
+                dateInput = Console.ReadLine();
+            }
 
             return dateInput;
 
@@ -104,7 +115,16 @@ namespace HabitTracker
 
             string numberInput = Console.ReadLine();
             
-            if (numberInput == "0") GetUserInput();
+            if (numberInput == "0") 
+            {
+                GetUserInput();
+            }
+
+            while(!Int32.TryParse(numberInput, out _) || Convert.ToInt32(numberInput) < 0)
+            {
+                Console.WriteLine("\n\nInvalid number, please try again.\n\n");
+                numberInput = Console.ReadLine();
+            }
 
             int finalInput = Convert.ToInt32(numberInput);
             
@@ -122,14 +142,13 @@ namespace HabitTracker
             {
                 connection.Open();
                 var tableCmd =  connection.CreateCommand();
-                tableCmd.CommandText = $"DELETE FROM drinking_water WHERE Id = '{recordId}'";
+                tableCmd.CommandText = $"DELETE FROM drinking_water WHERE Id = {recordId}";
 
                 int rowCount = tableCmd.ExecuteNonQuery(); 
-               
+                               
                 if (rowCount == 0)
                 {
                     Console.WriteLine($"\n\nRecord with Id# {recordId} doesn't exist. \n\n");
-                    connection.Close();
                     Delete();
                 }
             }
@@ -160,7 +179,7 @@ namespace HabitTracker
                             new DrinkingWater
                             {
                                 Id = reader.GetInt32(0),
-                                Date = DateTime.ParseExact(reader.GetString(1), "dd-MM-yy", new System.Globalization.CultureInfo("en-US")),
+                                Date = DateTime.ParseExact(reader.GetString(1), "dd-MM-yy", new CultureInfo("en-US")),
                                 Quantity = reader.GetInt32(2)
                             });
                     }
@@ -192,7 +211,7 @@ namespace HabitTracker
                 connection.Open();
 
                 var checkCmd = connection.CreateCommand();
-                checkCmd.CommandText = $"SELECT EXISTS(SELECT 1 FROM drinking_water WHERE Id = '{recordId}')";
+                checkCmd.CommandText = $"SELECT EXISTS(SELECT 1 FROM drinking_water WHERE Id = {recordId})";
                 int checkQuery = Convert.ToInt32(checkCmd.ExecuteScalar());
                
                 if (checkQuery == 0)
@@ -207,7 +226,7 @@ namespace HabitTracker
                 int quantity = GetNumberInput("\n\nPlease insert number of glasses or other measure of your choice (no decimals allowed).\n\n");
 
                 var tableCmd = connection.CreateCommand();
-                tableCmd.CommandText = $"UPDATE drinking_water SET date = '{date}', quantity = '{quantity}' WHERE id = '{recordId}'"; 
+                tableCmd.CommandText = $"UPDATE drinking_water SET date = '{date}', quantity = '{quantity}' WHERE id = {recordId}"; 
 
                 tableCmd.ExecuteNonQuery();
                 connection.Close();
