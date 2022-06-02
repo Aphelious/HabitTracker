@@ -59,12 +59,12 @@ namespace HabitTracker
                     case "3":
                         Delete();
                         break;
-                    // case "4":
-                    //     Update();
-                    //     break;
-                    // default:
-                    //     Console.WriteLine("\nInvalid Command. Please type a number from 0 to 4.\n");
-                    //     break;
+                    case "4":
+                        Update();
+                        break;
+                    default:
+                        Console.WriteLine("\nInvalid Command. Please type a number from 0 to 4.\n");
+                        break;
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace HabitTracker
             Console.Clear();
             GetAllRecords();
 
-            var recordId = GetNumberInput("\n\nPlease provide the record ID of the record you want to delete");
+            var recordId = GetNumberInput("\n\nPlease provide the record ID of the record you want to delete or type 0 to go back to the main menu\n\n");
 
             using (var connection = new SqliteConnection(connectionString))
             {
@@ -125,17 +125,18 @@ namespace HabitTracker
                 tableCmd.CommandText = $"DELETE FROM drinking_water WHERE Id = '{recordId}'";
 
                 int rowCount = tableCmd.ExecuteNonQuery(); 
-                GetAllRecords();
-
+               
                 if (rowCount == 0)
                 {
                     Console.WriteLine($"\n\nRecord with Id# {recordId} doesn't exist. \n\n");
+                    connection.Close();
                     Delete();
                 }
             }
 
             Console.WriteLine($"\n\nRecord with Id# {recordId} has been deleted. \n\n");
             GetUserInput();
+
         }
         private static void GetAllRecords()
         {
@@ -178,6 +179,43 @@ namespace HabitTracker
                 }
                 Console.WriteLine("--------------------------------------------\n");
             }
+        }
+         private static void Update()
+        {
+            Console.Clear();
+            GetAllRecords();
+
+            var recordId = GetNumberInput("\n\nPlease provide the record ID of the record you want to update or type 0 to go back to the main menu\n\n");
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                var checkCmd = connection.CreateCommand();
+                checkCmd.CommandText = $"SELECT EXISTS(SELECT 1 FROM drinking_water WHERE Id = '{recordId}')";
+                int checkQuery = Convert.ToInt32(checkCmd.ExecuteScalar());
+               
+                if (checkQuery == 0)
+                {
+                    Console.WriteLine($"\n\nRecord with Id# {recordId} doesn't exist. \n\n");
+                    connection.Close();
+                    Update();
+                }
+
+                string date = GetDateInput();
+
+                int quantity = GetNumberInput("\n\nPlease insert number of glasses or other measure of your choice (no decimals allowed).\n\n");
+
+                var tableCmd = connection.CreateCommand();
+                tableCmd.CommandText = $"UPDATE drinking_water SET date = '{date}', quantity = '{quantity}' WHERE id = '{recordId}'"; 
+
+                tableCmd.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            Console.WriteLine($"\n\nRecord with Id# {recordId} has been deleted. \n\n");
+            GetUserInput();
+
         }
     }
 
