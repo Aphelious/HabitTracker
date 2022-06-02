@@ -148,7 +148,8 @@ namespace HabitTracker
                                
                 if (rowCount == 0)
                 {
-                    Console.WriteLine($"\n\nRecord with Id# {recordId} doesn't exist. \n\n");
+                    Console.WriteLine($"\n\nRecord with Id# {recordId} doesn't exist. Please choose again. \n\n");
+                    Task.Delay(2000).Wait();
                     Delete();
                 }
             }
@@ -192,9 +193,10 @@ namespace HabitTracker
                 connection.Close();
 
                 Console.WriteLine("--------------------------------------------\n");
+                Console.WriteLine("Id#  -  Date  -  Quantity\n");
                 foreach (var dw in tableData)
                 {
-                    Console.WriteLine($"{dw.Id} - {dw.Date.ToString("dd-MM-yy")} - Quantity: {dw.Quantity}");
+                    Console.WriteLine($"{dw.Id} - {dw.Date.ToString("dd-MM-yy")} - {dw.Quantity} glasses");
                 }
                 Console.WriteLine("--------------------------------------------\n");
             }
@@ -216,7 +218,8 @@ namespace HabitTracker
                
                 if (checkQuery == 0)
                 {
-                    Console.WriteLine($"\n\nRecord with Id# {recordId} doesn't exist. \n\n");
+                    Console.WriteLine($"\n\nRecord with Id# {recordId} doesn't exist. Please choose again. \n\n");
+                    Task.Delay(2000).Wait();
                     connection.Close();
                     Update();
                 }
